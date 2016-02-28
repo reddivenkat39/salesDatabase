@@ -34,3 +34,31 @@ join sstimedim on sssales.timeno = sstimedim.TimeNo
 where ( sstimedim.TimeQuarter = 1)
 group by sstimedim.TimeQuarter
 ;
+
+
+
+/* 4 - number of unit sales of a item in a quarter*/
+
+select ssitem.ItemId , sstimedim.TimeQuarter , sum(sssales.SalesUnits)
+from
+(
+ssitem join sssales on ssitem.ItemId = sssales.ItemId
+)
+join sstimedim on sstimedim.TimeNo = sssales.timeno
+where ssitem.ItemId = 'I0036566'
+group by sstimedim.TimeQuarter;
+
+/* 5- number of item sales by customes of a particular area[state] */
+
+select  ssitem.ItemId, sssales.SalesUnits , sscustomer.CustState , sum(sssales.SalesUnits)
+from
+(
+sssales join ssitem on sssales.ItemId = ssitem.ItemId
+)
+join sscustomer on sscustomer.CustId = sssales.CustId
+where ssitem.ItemId = 'I0036577'
+group by sscustomer.CustState;
+
+/* it shows there are no customers from State BC for I0036566*/
+
+/* */
